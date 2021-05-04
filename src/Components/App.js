@@ -1,16 +1,20 @@
-import React from 'react';
-import '../Styles/App.scss';
+import LandingPage from "./LandingPage";
+import QuizPage from "./QuizPage";
+import { Route, Switch } from "react-router-dom";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      <div className="App">
-      </div>
-    );
-  }
-}
+const App = () => {
+  return (
+    <>
+      <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <Route path="/quizpage">
+          <QuizPage />
+        </Route>
+      </Switch>
+    </>
+  );
+};
 
 export default App;
