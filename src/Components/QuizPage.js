@@ -16,7 +16,8 @@ const Main = styled.main`
 const QuizPage = () => {
   const [question, setQuestion] = useState({});
   const [fragment, setFragment] = useState("");
-  const [numberCounter, setNumberCounter] = useState(0);
+  const [numberCounter, setNumberCounter] = useState(1);
+  const [nextStep, setNextStep] = useState("Next question");
 
   useEffect(() => {
     api.question().then((dataNumber) => {
@@ -34,8 +35,6 @@ const QuizPage = () => {
 
   console.log(fragment);
 
-  let nextStep = "Siguiente pregunta";
-
   const upDateCounter = () => {
     const nextNumberCounter = numberCounter + 1;
     return setNumberCounter(nextNumberCounter);
@@ -50,8 +49,8 @@ const QuizPage = () => {
       api.fragment(question.number).then((dataFragment) => {
         setFragment(dataFragment.toUpperCase());
       });
-    } else {
-      nextStep = "Jugar de nuevo";
+    } else if (numberCounter === 10) {
+      setNextStep("Play Again");
     }
   };
 
