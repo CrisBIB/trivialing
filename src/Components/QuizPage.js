@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Header from "./Header";
+import Question from "./Questions";
+import Counter from "./Counter";
 import Footer from "./Footer";
-import api from "../Services/Api";
 import React, { useState, useEffect } from "react";
+import api from "../Services/Api";
 
 const Main = styled.main`
   display: flex;
@@ -11,20 +12,11 @@ const Main = styled.main`
   align-items: center;
   height: 80vh;
 `;
-const Question = styled.h2`
-  font-size: 1.5em;
-  color: #007787;
-  margin: 1em;
-`;
-const Answer = styled.h3`
-  font-size: 1em;
-  color: #007787;
-  margin: 1em;
-`;
 
 const QuizPage = () => {
   const [question, setQuestion] = useState({});
   const [fragment, setFragment] = useState("");
+  const [numberCounter, setNumberCounter] = useState(0);
 
   useEffect(() => {
     api.question().then((dataNumber) => {
@@ -41,40 +33,35 @@ const QuizPage = () => {
   }, [question]);
 
   console.log(fragment);
-  const rightOption = question.number;
-  const rightAnswer = question.text;
 
-  const getRandomNumber = (max) => {
-    return Math.ceil(Math.random() * max);
+  let nextStep = "Siguiente pregunta";
+
+  const upDateCounter = () => {
+    const nextNumberCounter = numberCounter + 1;
+    return setNumberCounter(nextNumberCounter);
+  };
+
+  const handleButton = () => {
+    upDateCounter();
+    if (numberCounter < 10) {
+      api.question().then((dataNumber) => {
+        setQuestion(dataNumber);
+      });
+      api.fragment(question.number).then((dataFragment) => {
+        setFragment(dataFragment.toUpperCase());
+      });
+    } else {
+      nextStep = "Jugar de nuevo";
+    }
   };
 
   return (
     <>
       <Header />
       <Main>
-        <Question htmlFor="optionOne">{fragment}</Question>
-        <label htmlFor="options">
-          <label>{rightOption}</label>
-          <input
-            type="radio"
-            name="options"
-            id="optionOne"
-            value={rightOption}
-          />
-
-          <label htmlFor="optionTwo">{getRandomNumber(1000)}</label>
-          <input type="radio" name="options" id="optionTwo" value="" />
-
-          <label htmlFor="optionThree">{getRandomNumber(1000)}</label>
-          <input type="radio" name="options" id="optionThree" value="" />
-
-          <label htmlFor="optionFour">{getRandomNumber(1000)}</label>
-          <input type="radio" name="options" id="optionFour" value="" />
-        </label>
-
-        <Answer>{rightAnswer}</Answer>
-
-        <button>Nueva partida</button>
+        <Counter counter={numberCounter} />
+        <Question question={question} text={fragment} counter={numberCounter} />
+        <button onClick={handleButton}>{nextStep}</button>
       </Main>
       <Footer />
     </>

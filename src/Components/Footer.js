@@ -7,8 +7,13 @@ const Footer = styled.footer`
   padding: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
-const Small = styled.small``;
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 const React = styled.img`
   width: 25px;
 `;
@@ -16,13 +21,13 @@ const React = styled.img`
 const FooterApp = () => {
   return (
     <Footer>
-      <Small>CrisBIB &copy; 2021</Small>
-      <div>
+      <small>CrisBIB &copy; 2021</small>
+      <Container>
         <small>Powered by</small>
         <a href="https://es.reactjs.org/" target="_blank">
           <React src={logoReact} title="Logo React" alt="logo-reactjs" />
         </a>
-      </div>
+      </Container>
     </Footer>
   );
 };
