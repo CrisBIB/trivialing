@@ -1,43 +1,35 @@
 import styled from "styled-components";
+import RandomInputs from "./RandomInputs";
+import CorrectInput from "./CorrectInput";
 
-const Fragment = styled.h2`
+const Form = styled.form`
   font-size: 1.5em;
   color: #007787;
   margin: 1em;
 `;
-const Answer = styled.h3`
-  font-size: 1em;
-  color: #007787;
+const Container = styled.div`
+  font-size: 0.8em;
+  display: grid;
+  color: black;
+  grid-template-columns: 1fr 1fr;
   margin: 1em;
 `;
 
 const Question = (props) => {
-  const rightOption = props.question.number;
-  const rightAnswer = props.question.text;
-
-  const getRandomNumber = (max) => {
-    return Math.ceil(Math.random() * max);
-  };
-
+  /* Averiguar como evitar que se quede checkado el input marcado de la pregunta anterior. Posible arreglo utilizando otro sistema de marcado (fav)*/
   return (
-    <>
-      <Fragment htmlFor="optionOne">{props.text}</Fragment>
+    <Form>
       <label htmlFor="options">
-        <label>{rightOption}</label>
-        <input type="radio" name="options" id="optionOne" value={rightOption} />
-
-        <label htmlFor="optionTwo">{getRandomNumber(1000)}</label>
-        <input type="radio" name="options" id="optionTwo" value="" />
-
-        <label htmlFor="optionThree">{getRandomNumber(1000)}</label>
-        <input type="radio" name="options" id="optionThree" value="" />
-
-        <label htmlFor="optionFour">{getRandomNumber(1000)}</label>
-        <input type="radio" name="options" id="optionFour" value="" />
+        {props.text}
+        {/* Averiguar cómo colocar los inputs de manera aleatoria */}
+        <Container>
+          <RandomInputs trivia={props.trivia} />
+          <RandomInputs trivia={props.trivia} />
+          <CorrectInput trivia={props.trivia} rightAnswer={props.rightAnswer} />
+          <RandomInputs trivia={props.trivia} />
+        </Container>
       </label>
-
-      <Answer>{rightAnswer}</Answer>
-    </>
+    </Form>
   );
 };
 

@@ -1,7 +1,7 @@
-import styled from "styled-components";
 import logoTrivialis from "../Images/Trivialis2.png";
 import { Link } from "react-router-dom";
-import FooterApp from "./Footer";
+import Footer from "./Footer";
+import styled from "styled-components";
 
 const Main = styled.main`
   display: flex;
@@ -45,14 +45,14 @@ const LandingPage = () => {
             alt="logo-trivialis"
           />
         </Container>
-        <Subtitle>Welcome to Trivialis number quiz</Subtitle>
+        <Subtitle>Trivialis number quiz</Subtitle>
         <div>
           <div>
-            <Link to="/quizpage">READY?</Link>
+            <Link to="/instructionspage">READY?</Link>
           </div>
         </div>
       </Main>
-      <FooterApp />
+      <Footer />
     </>
   );
 };

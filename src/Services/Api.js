@@ -14,6 +14,6 @@ const getFragmentNumberFromApi = (number) => {
 };
 
 export default {
-  question: getRandomNumberFromApi,
+  trivia: getRandomNumberFromApi,
   fragment: getFragmentNumberFromApi,
 };
