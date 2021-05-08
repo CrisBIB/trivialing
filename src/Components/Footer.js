@@ -8,9 +8,7 @@ const Footer = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: absolute;
-  bottom: 0;
-  width: 90%;
+  width: 100%;
 `;
 const Container = styled.div`
   display: flex;
