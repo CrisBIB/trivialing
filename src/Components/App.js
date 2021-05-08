@@ -1,6 +1,7 @@
 import { Route, Switch } from "react-router-dom";
 import LandingPage from "./LandingPage";
 import QuizPage from "./QuizPage";
+import "../Styles/App.scss";
 
 const App = () => {
   return (

@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import api from "../Services/Api";
 import Counter from "./Counter";
+import Time from "./Time";
 import Question from "./TriviaQuestions";
 import AnswersList from "./AnswersList";
 import Footer from "./Footer";
 import styled from "styled-components";
+import Button from "react-bootstrap/Button";
 
 const Main = styled.main`
   display: flex;
@@ -21,7 +23,7 @@ const Answer = styled.h3`
 const QuizPage = () => {
   const [trivia, setTrivia] = useState({});
   const [fragment, setFragment] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [correctAnswer, setCorrectAnswer] = useState("");
   // const [checked, setChecked] = useState({ checked: "false" });
   const [numberCounter, setNumberCounter] = useState(1);
   const [nextStep, setNextStep] = useState("Next question");
@@ -43,7 +45,7 @@ const QuizPage = () => {
 
   //Cuando implemente el contador, la ejecución de estas funciones dependerá de que llegue al tiempo límite.
   const showCorrectAnswer = () => {
-    setAnswer(trivia.text);
+    setCorrectAnswer(trivia.text);
   };
   const upDateListAnswer = () => {
     setQuestionsAnswered([...questionsAnswered, trivia.text]);
@@ -59,7 +61,7 @@ const QuizPage = () => {
 
   const handleButton = (/* unChecked */) => {
     upDateCounter();
-    setAnswer("");
+    setCorrectAnswer("");
     // setChecked(null);
     api.trivia().then((dataNumber) => {
       setTrivia(dataNumber);
@@ -73,6 +75,7 @@ const QuizPage = () => {
       setNextStep("Play Again");
     } else {
       setNumberCounter(1);
+      setQuestionsAnswered([]);
     }
   };
   return (
@@ -80,6 +83,7 @@ const QuizPage = () => {
       <Header />
       <Main>
         <Counter counter={numberCounter} />
+        <Time />
         <Question
           trivia={trivia}
           text={fragment}
@@ -87,8 +91,8 @@ const QuizPage = () => {
           showCorrectAnswer={showCorrectAnswer}
           upDateListAnswer={upDateListAnswer}
         />
-        <Answer>{answer}</Answer>
-        <button onClick={handleButton}>{nextStep}</button>
+        <Answer>{correctAnswer}</Answer>
+        <Button onClick={handleButton}>{nextStep}</Button>
         <AnswersList answers={questionsAnswered} trivia={trivia} />
       </Main>
       <Footer />
