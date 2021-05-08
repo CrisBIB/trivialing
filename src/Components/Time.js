@@ -1,16 +1,37 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import ProgressBar from "react-bootstrap/ProgressBar";
-import styled from "styled-components";
+import "../Styles/time.scss";
 
 const Time = () => {
   return (
     <>
-      <p>Probando...</p>
-      <ProgressBar>
-        <ProgressBar striped variant="success" now={35} key={1} />
-        <ProgressBar variant="warning" now={20} key={2} />
-        <ProgressBar striped variant="danger" now={10} key={3} />
-      </ProgressBar>
+      <div>
+        <p>Timing</p>
+        <ProgressBar>
+          <ProgressBar
+            className="first"
+            striped
+            variant="success"
+            animated
+            now={33}
+            key={1}
+          />
+          <ProgressBar
+            className="second"
+            variant="warning"
+            animated
+            now={33}
+            key={2}
+          />
+          <ProgressBar
+            className="third"
+            striped
+            variant="danger"
+            animated
+            now={33}
+            key={3}
+          />
+        </ProgressBar>
+      </div>
     </>
   );
 };

@@ -37,9 +37,24 @@ const QuizPage = () => {
 
   useEffect(() => {
     if (trivia.number) {
-      api.fragment(trivia.number).then((dataFragment) => {
-        setFragment(dataFragment.toUpperCase());
-      });
+      const numberToString = trivia.number.toString();
+      console.log(numberToString);
+      if (numberToString.includes("+")) {
+        console.log("Incluye un +");
+        api.trivia().then((dataNumber) => {
+          setTrivia(dataNumber);
+        });
+      } else if (typeof trivia.number === NaN) {
+        console.log("Es null");
+        api.trivia().then((dataNumber) => {
+          setTrivia(dataNumber);
+        });
+      } else {
+        console.log("Va todo ok");
+        api.fragment(numberToString).then((dataFragment) => {
+          setFragment(dataFragment.toUpperCase());
+        });
+      }
     }
   }, [trivia]);
 
