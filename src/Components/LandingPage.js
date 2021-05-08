@@ -23,7 +23,7 @@ const Image = styled.img`
   display: inline-block;
   position: absolute;
   right: 5px;
-  top: 80px;
+  top: 70px;
   z-index: -1;
 `;
 const Subtitle = styled.h2`
@@ -45,12 +45,12 @@ const LandingPage = () => {
             alt="logo-trivialis"
           />
         </Container>
-        <Subtitle>Trivialis number quiz</Subtitle>
+        <Subtitle>Wellcome to the amazing world of numbers!</Subtitle>
         <div>
-          <div>
-            <Link to="/instructionspage">READY?</Link>
-          </div>
+          {/*Hacer un colapsable*/}
+          <h4>Ver instrucciones</h4>
         </div>
+        <Link to="/quizpage">READY TO QUIZ?</Link>
       </Main>
       <Footer />
     </>

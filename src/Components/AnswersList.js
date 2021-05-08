@@ -1,12 +1,9 @@
 const AnswersList = (props) => {
+  console.log(props);
   const list = props.answers.map((answer) => {
-    <li key={props.trivia.number}>{answer}</li>;
+    return <li>{answer}</li>;
   });
-  return (
-    <div>
-      <ul>{list}</ul>
-    </div>
-  );
+  return <ol>{list}</ol>;
 };
 
 export default AnswersList;

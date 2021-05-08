@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import api from "../Services/Api";
 import Counter from "./Counter";
-import Question from "./Questions";
+import Question from "./TriviaQuestions";
 import AnswersList from "./AnswersList";
 import Footer from "./Footer";
 import styled from "styled-components";
@@ -11,7 +11,6 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 80vh;
 `;
 const Answer = styled.h3`
   font-size: 1em;
@@ -42,9 +41,13 @@ const QuizPage = () => {
     }
   }, [trivia]);
 
-  useEffect(() => {
+  //Cuando implemente el contador, la ejecución de estas funciones dependerá de que llegue al tiempo límite.
+  const showCorrectAnswer = () => {
+    setAnswer(trivia.text);
+  };
+  const upDateListAnswer = () => {
     setQuestionsAnswered([...questionsAnswered, trivia.text]);
-  }, []);
+  };
 
   const upDateCounter = () => {
     let nextNumberCounter;
@@ -53,24 +56,18 @@ const QuizPage = () => {
     }
     return setNumberCounter(nextNumberCounter);
   };
-  const rightAnswer = () => {
-    setAnswer(trivia.text);
-  };
-
-  const upDateAnswerList = () => {};
 
   const handleButton = (/* unChecked */) => {
     upDateCounter();
     setAnswer("");
-    upDateAnswerList();
     // setChecked(null);
+    api.trivia().then((dataNumber) => {
+      setTrivia(dataNumber);
+    });
+    api.fragment(parseInt(trivia.number)).then((dataFragment) => {
+      setFragment(dataFragment.toUpperCase());
+    });
     if (numberCounter < 9) {
-      api.trivia().then((dataNumber) => {
-        setTrivia(dataNumber);
-      });
-      api.fragment(trivia.number).then((dataFragment) => {
-        setFragment(dataFragment.toUpperCase());
-      });
       setNextStep("Next question");
     } else if (numberCounter === 9) {
       setNextStep("Play Again");
@@ -78,7 +75,6 @@ const QuizPage = () => {
       setNumberCounter(1);
     }
   };
-
   return (
     <>
       <Header />
@@ -88,8 +84,8 @@ const QuizPage = () => {
           trivia={trivia}
           text={fragment}
           counter={numberCounter}
-          rightAnswer={rightAnswer}
-          // unChecked={checked}
+          showCorrectAnswer={showCorrectAnswer}
+          upDateListAnswer={upDateListAnswer}
         />
         <Answer>{answer}</Answer>
         <button onClick={handleButton}>{nextStep}</button>

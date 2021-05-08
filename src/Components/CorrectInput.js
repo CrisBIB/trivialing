@@ -1,9 +1,11 @@
 const CorrectInput = (props) => {
-  const rightOption = props.trivia.number;
+  const rightOption = parseInt(props.trivia.number);
 
-  const handleInput = (ev) => {
-    const checked = ev.target.checked;
-    props.rightAnswer(checked);
+  //Esta función me servirá para guardar en el estado las respuestas correctas que se den, y pintarlas en verdes en el listado de preguntas contestadas. Lo que hará que se muestra la respuesta correcta y que se actualice el listado de respuesta, será el límite de tiempo.
+  const handleInput = () => {
+    //const checked = ev.target.checked;
+    props.showCorrectAnswer(/* //checked */);
+    props.upDateListAnswer();
   };
   return (
     <label>

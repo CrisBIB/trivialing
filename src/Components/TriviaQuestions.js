@@ -25,7 +25,11 @@ const Question = (props) => {
         <Container>
           <RandomInputs trivia={props.trivia} />
           <RandomInputs trivia={props.trivia} />
-          <CorrectInput trivia={props.trivia} rightAnswer={props.rightAnswer} />
+          <CorrectInput
+            trivia={props.trivia}
+            showCorrectAnswer={props.showCorrectAnswer}
+            upDateListAnswer={props.upDateListAnswer}
+          />
           <RandomInputs trivia={props.trivia} />
         </Container>
       </label>
