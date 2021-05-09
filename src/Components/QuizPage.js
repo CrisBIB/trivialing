@@ -61,11 +61,11 @@ const QuizPage = () => {
     setButtonDisability(false);
     upDateListAnswer();
   };
-  const nextButton = () => {
+  const nextStepButton = () => {
     if (numberCounter < 10) {
       return (
         <Button
-          variant="info"
+          variant="warning"
           onClick={handleButton}
           disabled={buttonDisability}
         >
@@ -132,7 +132,7 @@ const QuizPage = () => {
           correctAnswer={correctAnswer}
           timeOut={timeOut}
         />
-        <div>{nextButton()}</div>
+        <div>{nextStepButton()}</div>
         <AnswersList answers={questionsAnswered} trivia={trivia} />
       </Main>
       <Footer />
