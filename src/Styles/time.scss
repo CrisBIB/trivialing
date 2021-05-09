@@ -1,3 +1,20 @@
-.first {
-  background-color: black;
+.bg-success {
+  background-color: #7ce6d7 !important;
+}
+
+.bg-warning {
+  background-color: #f7dc69 !important;
+}
+
+.bg-danger {
+  background-color: #e685c3 !important;
+}
+.start {
+  width: 0 !important;
+}
+.end {
+  width: 33.33% !important;
+}
+.animation {
+  transition: width 10s linear !important;
 }
