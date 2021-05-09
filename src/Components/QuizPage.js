@@ -8,8 +8,6 @@ import Button from "./Button";
 import AnswersList from "./AnswersList";
 import Footer from "./Footer";
 import styled from "styled-components";
-import correctIcon from "../Images/Correct_Icon.jpeg";
-import incorrectIcon from "../Images/Incorrect_Icon.jpeg";
 
 const Main = styled.main`
   width: 70%;
@@ -28,11 +26,8 @@ const QuizPage = () => {
   const [trivia, setTrivia] = useState({});
   const [fragment, setFragment] = useState("");
   const [inputId, setInputId] = useState(0);
-
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [buttonDisability, setButtonDisability] = useState(true);
-  const [iconsArray, setIconsArray] = useState([]);
-
   const [numberCounter, setNumberCounter] = useState(1);
   const [questionsAnswered, setQuestionsAnswered] = useState([]);
 
@@ -61,6 +56,7 @@ const QuizPage = () => {
       }
     }
   }, [trivia]);
+
   useEffect(() => {
     setButtonDisability(true);
   }, [trivia]);
@@ -76,11 +72,6 @@ const QuizPage = () => {
 
   const upDateListAnswer = () => {
     setQuestionsAnswered([...questionsAnswered, trivia.text]);
-    if (trivia.number === inputId) {
-      return setIconsArray(...iconsArray, correctIcon);
-    } else {
-      return setIconsArray(...iconsArray, incorrectIcon);
-    }
   };
 
   const upDateCounter = () => {
@@ -94,7 +85,7 @@ const QuizPage = () => {
     return setNumberCounter(nextNumberCounter);
   };
   const handleInput = (inputChecked) => {
-    return setInputId(inputChecked);
+    setInputId(inputChecked);
   };
 
   const nextQuestion = () => {
@@ -127,6 +118,7 @@ const QuizPage = () => {
           inputId={inputId}
           answers={questionsAnswered}
           trivia={trivia}
+          button={buttonDisability}
         />
       </Main>
       <Footer />
