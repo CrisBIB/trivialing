@@ -2,6 +2,7 @@ import logoTrivialis from "../Images/Trivialis2.png";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import styled from "styled-components";
+import Button from "react-bootstrap/Button";
 
 const Main = styled.main`
   display: flex;
@@ -33,6 +34,13 @@ const Subtitle = styled.h2`
   color: #007787;
 `;
 
+const Text = styled.h3`
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 0em;
+  color: #e685c3s;
+`;
+
 const LandingPage = () => {
   return (
     <>
@@ -48,9 +56,20 @@ const LandingPage = () => {
         <Subtitle>Wellcome to the amazing world of numbers!</Subtitle>
         <div>
           {/*Hacer un colapsable*/}
-          <h4>Ver instrucciones</h4>
+          <Text>Ver instrucciones</Text>
         </div>
-        <Link to="/quizpage">READY TO QUIZ?</Link>
+        <Button
+          variant="warning"
+          class="btn btn-success"
+          style={{ marginBottom: 30 }}
+        >
+          <Link
+            to="/quizpage"
+            style={{ textDecoration: "none", color: "#fff" }}
+          >
+            READY TO QUIZ?
+          </Link>
+        </Button>
       </Main>
       <Footer />
     </>

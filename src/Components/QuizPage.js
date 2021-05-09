@@ -3,26 +3,36 @@ import Header from "./Header";
 import api from "../Services/Api";
 import Counter from "./Counter";
 import Timing from "./Timing";
-import Question from "./TriviaQuestions";
+import Question from "./Question";
+import Button from "./Button";
 import AnswersList from "./AnswersList";
 import Footer from "./Footer";
 import styled from "styled-components";
-import Button from "react-bootstrap/Button";
+import correctIcon from "../Images/Correct_Icon.jpeg";
+import incorrectIcon from "../Images/Incorrect_Icon.jpeg";
 
 const Main = styled.main`
+  width: 70%;
+  padding-top: 3%;
   display: flex;
+  margin: auto;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 90px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const QuizPage = () => {
   const [trivia, setTrivia] = useState({});
   const [fragment, setFragment] = useState("");
+  const [inputId, setInputId] = useState(0);
+
   const [correctAnswer, setCorrectAnswer] = useState("");
-  const [displaySuccess, setDisplaySuccess] = useState("start");
-  const [displayWarning, setDisplayWarning] = useState("start");
-  const [displayDanger, setDisplayDanger] = useState("start");
   const [buttonDisability, setButtonDisability] = useState(true);
+  const [iconsArray, setIconsArray] = useState([]);
+
   const [numberCounter, setNumberCounter] = useState(1);
   const [questionsAnswered, setQuestionsAnswered] = useState([]);
 
@@ -30,6 +40,7 @@ const QuizPage = () => {
     api.trivia().then((dataNumber) => {
       setTrivia(dataNumber);
     });
+    setButtonDisability(true);
   }, []);
 
   useEffect(() => {
@@ -45,49 +56,33 @@ const QuizPage = () => {
         });
       } else {
         api.fragment(numberToString).then((dataFragment) => {
-          setFragment(dataFragment.toUpperCase());
+          setFragment(dataFragment.toLowerCase());
         });
       }
     }
   }, [trivia]);
-
   useEffect(() => {
     setButtonDisability(true);
   }, [trivia]);
 
-  const timeOut = () => {
-    setCorrectAnswer(trivia.text);
-    resetProgressBar();
-    setButtonDisability(false);
-    upDateListAnswer();
-  };
-  const nextStepButton = () => {
-    if (numberCounter < 10) {
-      return (
-        <Button
-          variant="warning"
-          onClick={handleButton}
-          disabled={buttonDisability}
-        >
-          Next question
-        </Button>
-      );
-    } else {
-      return (
-        <Button disable variant="warning" onClick={handleButton}>
-          Play again
-        </Button>
-      );
-    }
-  };
+  useEffect(() => {
+    const timeOut = () => {
+      setCorrectAnswer(trivia.text);
+      setButtonDisability(false);
+      upDateListAnswer();
+    };
+    setTimeout(timeOut, 30000);
+  }, [trivia]);
+
   const upDateListAnswer = () => {
     setQuestionsAnswered([...questionsAnswered, trivia.text]);
+    if (trivia.number === inputId) {
+      return setIconsArray(...iconsArray, correctIcon);
+    } else {
+      return setIconsArray(...iconsArray, incorrectIcon);
+    }
   };
-  const resetProgressBar = () => {
-    setDisplaySuccess("start");
-    setDisplayWarning("start");
-    setDisplayDanger("start");
-  };
+
   const upDateCounter = () => {
     let nextNumberCounter;
     if (numberCounter < 10) {
@@ -98,15 +93,15 @@ const QuizPage = () => {
     }
     return setNumberCounter(nextNumberCounter);
   };
+  const handleInput = (inputChecked) => {
+    return setInputId(inputChecked);
+  };
 
-  const handleButton = () => {
+  const nextQuestion = () => {
     upDateCounter();
     setCorrectAnswer("");
     api.trivia().then((dataNumber) => {
       setTrivia(dataNumber);
-    });
-    api.fragment(parseInt(trivia.number)).then((dataFragment) => {
-      setFragment(dataFragment.toUpperCase());
     });
   };
 
@@ -115,25 +110,24 @@ const QuizPage = () => {
       <Header />
       <Main>
         <Counter counter={numberCounter} />
-        <Timing
-          trivia={trivia}
-          //Averiguar la manera de optimizar este código
-          success={displaySuccess}
-          warning={displayWarning}
-          danger={displayDanger}
-          setSuccess={setDisplaySuccess}
-          setWarning={setDisplayWarning}
-          setDanger={setDisplayDanger}
-        />
+        <Timing trivia={trivia} />
         <Question
           trivia={trivia}
           text={fragment}
+          handleInput={handleInput}
           counter={numberCounter}
           correctAnswer={correctAnswer}
-          timeOut={timeOut}
         />
-        <div>{nextStepButton()}</div>
-        <AnswersList answers={questionsAnswered} trivia={trivia} />
+        <Button
+          counter={numberCounter}
+          next={nextQuestion}
+          disabled={buttonDisability}
+        />
+        <AnswersList
+          inputId={inputId}
+          answers={questionsAnswered}
+          trivia={trivia}
+        />
       </Main>
       <Footer />
     </>

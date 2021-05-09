@@ -5,10 +5,13 @@ const Footer = styled.footer`
   background: black;
   color: white;
   padding: 20px;
+  position: absolute;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  vertical-align: baseline;
 `;
 const Container = styled.div`
   display: flex;

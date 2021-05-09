@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "../Styles/time.scss";
 import styled from "styled-components";
@@ -6,40 +6,52 @@ import styled from "styled-components";
 const Container = styled.div`
   width: 70%;
   text-align: center;
+  margin: 5%;
 `;
-
 const Timing = (props) => {
+  const [displaySuccess, setDisplaySuccess] = useState("start");
+  const [displayWarning, setDisplayWarning] = useState("start");
+  const [displayDanger, setDisplayDanger] = useState("start");
+
   useEffect(() => {
-    props.setSuccess("end animation");
+    const successProgress = () => {
+      setDisplaySuccess("end animation");
+    };
+    setTimeout(successProgress, 0);
     const warningProgress = () => {
-      props.setWarning("end animation");
+      setDisplayWarning("end animation");
     };
     setTimeout(warningProgress, 10000);
     const dangerProgress = () => {
-      props.setDanger("end animation");
+      setDisplayDanger("end animation");
     };
     setTimeout(dangerProgress, 20000);
+    const resetProgressBar = () => {
+      setDisplaySuccess("start");
+      setDisplayWarning("start");
+      setDisplayDanger("start");
+    };
+    setTimeout(resetProgressBar, 30000);
   }, [props.trivia]);
 
   return (
     <Container>
-      <label>Timing</label>
       <ProgressBar>
         <ProgressBar
-          className={`${props.success}`}
+          className={displaySuccess}
           striped
           variant="success"
           animated
           key={1}
         />
         <ProgressBar
-          className={`${props.warning}`}
+          className={displayWarning}
           variant="warning"
           animated
           key={2}
         />
         <ProgressBar
-          className={`${props.danger}`}
+          className={displayDanger}
           striped
           variant="danger"
           animated

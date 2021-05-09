@@ -1,25 +1,31 @@
 const getRandomNumberFromApi = () => {
-  return fetch("//numbersapi.com/random/trivia?json")
+  return fetch(
+    `http://numbersapi.com/random/trivia?json` /* , {
+    mode: "no-cors",
+    credentials: "omit",
+    referrerPolicy: "unsafe-url",
+  } */
+  )
     .then((response) => response.json())
     .then((dataApi) => {
-      console.log(dataApi);
       return dataApi;
     })
-    .catch((errorRandomNumber) =>
-      console.log(`Ha sucedido un error: ${errorRandomNumber}`)
-    );
+    .catch((error) => console.log(`Ha sucedido un error: ${error}`));
 };
 
 const getFragmentNumberFromApi = (number) => {
-  return fetch(`//numbersapi.com/${number}/trivia?fragment`)
+  return fetch(
+    `http://numbersapi.com/${number}/trivia?fragment` /* , {
+    mode: "no-cors",
+    credentials: "omit",
+    referrerPolicy: "unsafe-url",
+  } */
+  )
     .then((response) => response.text())
     .then((dataApi) => {
-      console.log(dataApi);
       return dataApi;
     })
-    .catch((errorFragmentNumber) =>
-      console.log(`Ha sucedido un error: ${errorFragmentNumber}`)
-    );
+    .catch((error) => console.log(`Ha sucedido un error: ${error}`));
 };
 
 export default {

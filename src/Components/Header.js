@@ -2,7 +2,10 @@ import logoTrivialis from "../Images/Trivialis2.png";
 import styled from "styled-components";
 
 const HeaderApp = styled.header`
-  height: 10vh;
+  height: 15vh;
+  @media (max-width: 768px) {
+    height: 10vh;
+  }
 `;
 const Container = styled.div`
   display: flex;
@@ -11,13 +14,19 @@ const Container = styled.div`
   border-bottom: solid 1px #007787;
 `;
 const Title = styled.h1`
-  font-size: 1em;
+  font-size: 3em;
   color: #007787;
   margin-top: 0.8em;
+  @media (max-width: 768px) {
+    font-size: 1em;
+  }
 `;
 const Image = styled.img`
-  width: 10%;
   text-align: right;
+  @media (max-width: 768px) {
+    width: 10%;
+  }
+  width: 5%;
 `;
 
 const Header = () => {
@@ -29,7 +38,7 @@ const Header = () => {
         <Image
           title="Logo Trivialis"
           src={logoTrivialis}
-          alt="logo-trivialis"
+          alt="logo_trivialis"
         />
       </Container>
     </HeaderApp>

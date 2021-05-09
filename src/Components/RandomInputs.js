@@ -1,24 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
-const RandomInputs = React.memo((props) => {
-  const getRandomNumber = (max) => {
-    return Math.ceil(Math.random() * max);
+const Input = styled.input`
+  margin-right: 8px;
+`;
+
+const Label = styled.label`
+  text-align: left;
+`;
+
+const RandomInputs = (props) => {
+  const [randomNumber, setRandomNumber] = useState(null);
+
+  useEffect(() => {
+    setRandomNumber(Math.ceil(Math.random() * 10000));
+  }, [props.trivia]);
+
+  const handleInput = (ev) => {
+    const inputId = parseInt(ev.target.id);
+    props.handleInput(inputId);
   };
 
   return (
-    <>
-      <label>
-        {getRandomNumber(1000)}
-        <input
-          type="radio"
-          name="options"
-          id="options"
-          value=""
-          id={getRandomNumber(1000)}
-        ></input>
-      </label>
-    </>
+    <Label>
+      <Input
+        onChange={handleInput}
+        value=""
+        id={randomNumber}
+        type="radio"
+        name="options"
+      />{" "}
+      {randomNumber}
+    </Label>
   );
-});
+};
 
 export default RandomInputs;
