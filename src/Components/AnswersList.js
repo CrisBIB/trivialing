@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import correctIcon from "../Images/Correct_Icon.jpeg";
+import incorrectIcon from "../Images/Incorrect_Icon.jpeg";
 import styled from "styled-components";
 
 const Title = styled.h3`
@@ -44,13 +46,23 @@ const Answer = styled.p`
 const Div = styled.div``;
 
 const AnswersList = (props) => {
+  const [iconsArray, setIconsArray] = useState([]);
+
+  useEffect(() => {
+    if (props.inputId && !props.inputId.toString().includes("+")) {
+      props.trivia.number === props.inputId
+        ? setIconsArray([...iconsArray, correctIcon])
+        : setIconsArray([...iconsArray, incorrectIcon]);
+    }
+  }, [props.answers]);
+
   const listItems = props.answers.map((answer, index) => {
     return (
       <Item key={index}>
         <Div>
           <Paragraph>
-            <Image /* src={props.iconsArray[index]} */ />
-            Question {index + 1}:
+            <Image src={iconsArray[index + 1]} />
+            Question {index + 1}
           </Paragraph>
           <Answer>{answer}</Answer>
         </Div>
