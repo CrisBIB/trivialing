@@ -29,7 +29,7 @@ const RandomInputs = (props) => {
         id={randomNumber}
         type="radio"
         name="options"
-      />{" "}
+      />
       {randomNumber}
     </Label>
   );

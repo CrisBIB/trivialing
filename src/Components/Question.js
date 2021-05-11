@@ -89,8 +89,8 @@ const Question = (props) => {
     setInputsSorted(inputsArray);
   }, [props.trivia]);
 
-  const randomInputsPosition = inputsSorted.map((input, index) => {
-    return <ListItems key={index}>{input.input}</ListItems>;
+  const randomInputsPosition = inputsSorted.map((input) => {
+    return <ListItems key={input.id}>{input.input}</ListItems>;
   });
   return (
     <>

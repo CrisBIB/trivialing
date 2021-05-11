@@ -49,13 +49,16 @@ const Div = styled.div``;
 
 const AnswersList = (props) => {
   const [iconsArray, setIconsArray] = useState([]);
+
   useEffect(() => {
-    if (props.inputId) {
-      props.trivia.number === props.inputId
-        ? setIconsArray([...iconsArray, correctIcon])
-        : setIconsArray([...iconsArray, incorrectIcon]);
-    } else {
-      setIconsArray([...iconsArray, skipIcon]);
+    if (props.answers.length) {
+      if (props.inputId) {
+        props.trivia.number === props.inputId
+          ? setIconsArray([...iconsArray, correctIcon])
+          : setIconsArray([...iconsArray, incorrectIcon]);
+      } else {
+        setIconsArray([...iconsArray, skipIcon]);
+      }
     }
   }, [props.answers]);
 
@@ -64,7 +67,7 @@ const AnswersList = (props) => {
       <Item key={index}>
         <Div>
           <Paragraph>
-            <Image src={iconsArray[index + 3]} />
+            <Image src={iconsArray[index]} />
             Question {index + 1}
           </Paragraph>
           <Answer>{answer}</Answer>
@@ -72,6 +75,7 @@ const AnswersList = (props) => {
       </Item>
     );
   });
+
   return (
     <div>
       <Title>Take a look to your results:</Title>

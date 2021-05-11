@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 const ButtonPlayAgain = (props) => {
@@ -11,7 +12,9 @@ const ButtonPlayAgain = (props) => {
         variant="warning"
         onClick={handleButton}
       >
-        Play Again
+        <Link to="/" style={{ textDecoration: "none", color: "#fff" }}>
+          Play Again!
+        </Link>
       </Button>
     );
   }

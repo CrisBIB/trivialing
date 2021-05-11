@@ -23,12 +23,14 @@ const Main = styled.main`
     width: 100%;
   }
 `;
+
+const questionMaxTime = 15000;
+
 const QuizPage = () => {
   // Data from API states
   const [trivia, setTrivia] = useState({});
   const [fragment, setFragment] = useState("");
   // Questions states
-  const [time, setTime] = useState();
   const [inputId, setInputId] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [numberCounter, setNumberCounter] = useState(1);
@@ -39,13 +41,15 @@ const QuizPage = () => {
     warning: "start",
     danger: "start",
   });
-  /* AQUÍ HAY UN ERROR */
+  // Set timeout ids
+  const [time, setTime] = useState(null);
   const [clearProgressBar, setClearProgressBar] = useState({
-    warning: 0,
-    success: 0,
-    danger: 0,
+    warning: null,
+    success: null,
+    danger: null,
   });
-  console.log(clearProgressBar);
+
+  // Buttons
   const [buttonConfirmDisability, setButtonConfirmDisability] = useState(false);
   const [buttonNextDisability, setButtonNextDisability] = useState(true);
 
@@ -83,14 +87,6 @@ const QuizPage = () => {
     }
   }, [trivia]);
 
-  //2. Count down
-  useEffect(() => {
-    const countDown = () => {
-      confirmAnswer();
-    };
-    setTime(setTimeout(countDown, 15000));
-  }, [trivia]);
-
   //3. Time Line effects
   useEffect(() => {
     playProgressBar();
@@ -98,6 +94,8 @@ const QuizPage = () => {
 
   //Play time line
   const playProgressBar = () => {
+    resetProgressBar();
+
     const successProgress = () => {
       setDisplayProgressBar({
         success: "end animation",
@@ -105,6 +103,7 @@ const QuizPage = () => {
         danger: "start",
       });
     };
+
     const warningProgress = () => {
       setDisplayProgressBar({
         success: "end animation",
@@ -112,6 +111,7 @@ const QuizPage = () => {
         danger: "start",
       });
     };
+
     const dangerProgress = () => {
       setDisplayProgressBar({
         success: "end animation",
@@ -119,25 +119,43 @@ const QuizPage = () => {
         danger: "end animation",
       });
     };
-    setClearProgressBar(
-      { success: setTimeout(successProgress, 0) },
-      { warning: setTimeout(warningProgress, 5000) },
-      { danger: setTimeout(dangerProgress, 10000) }
-    );
+
+    // set new timeouts
+    const warningTime = questionMaxTime / 3;
+    const dangerTime = (questionMaxTime / 3) * 2;
+    setTime(setTimeout(confirmAnswer, questionMaxTime));
+    setClearProgressBar({
+      success: setTimeout(successProgress, 0),
+      warning: setTimeout(warningProgress, warningTime),
+      danger: setTimeout(dangerProgress, dangerTime),
+    });
+  };
+
+  const resetProgressBar = () => {
+    clearTimeout(time);
+    clearTimeout(clearProgressBar.success);
+    clearTimeout(clearProgressBar.warning);
+    clearTimeout(clearProgressBar.danger);
+    setDisplayProgressBar({
+      success: "start",
+      warning: "start",
+      danger: "start",
+    });
   };
 
   // Define handle functions
   const handleInput = (inputChecked) => {
     setInputId(inputChecked);
   };
+
   const confirmAnswer = () => {
-    clearTimeout(time);
     resetProgressBar();
     setCorrectAnswer(trivia.text);
     setQuestionsAnswered([...questionsAnswered, trivia.text]);
     setButtonConfirmDisability(true);
     setButtonNextDisability(false);
   };
+
   const nextQuestion = () => {
     upDateCounter();
     playProgressBar();
@@ -149,6 +167,7 @@ const QuizPage = () => {
       setTrivia(dataNumber);
     });
   };
+
   const upDateCounter = () => {
     let nextNumberCounter;
     numberCounter === 10
@@ -157,23 +176,6 @@ const QuizPage = () => {
     return setNumberCounter(nextNumberCounter);
   };
 
-  //Reset time line
-  const resetProgressBar = () => {
-    setDisplayProgressBar({
-      success: "start",
-      warning: "start",
-      danger: "start",
-    });
-    clearTimeout(clearProgressBar.success);
-    clearTimeout(clearProgressBar.warning);
-    clearTimeout(clearProgressBar.danger);
-
-    setClearProgressBar({
-      success: 0,
-      warning: 0,
-      danger: 0,
-    });
-  };
   return (
     <>
       <Header />

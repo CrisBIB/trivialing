@@ -41,7 +41,6 @@ const Subtitle = styled.h2`
   margin-top: 1em;
   color: #007787;
 `;
-
 /* const Text = styled.h3`
   font-size: 1.5em;
   text-align: center;
