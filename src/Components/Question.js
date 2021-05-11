@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import RandomInputs from "./RandomInputs";
 import CorrectInput from "./CorrectInput";
 import styled from "styled-components";
@@ -6,28 +7,30 @@ const Form = styled.form`
   color: #007787;
   margin: 1em;
   text-align: center;
-  font-size: 30px;
-  @media (max-width: 768px) {
-    font-size: 15px;
+  font-size: 15px;
+  @media (min-width: 768px) {
+    font-size: 30px;
   }
 `;
 const Label = styled.label`
-  width: 90%;
   align-items: center;
 `;
-const Container = styled.div`
+const List = styled.ul`
   display: grid;
   color: black;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: auto auto;
   margin: 1em;
+  margin-left: 25%;
+  list-style: none;
+  text-align: left;
+  padding: 0;
 `;
+const ListItems = styled.li``;
 const Answer = styled.div`
-  margin: 2em;
-  margin-top: 0;
   text-align: center;
-  font-size: 25px;
-  @media (max-width: 768px) {
-    font-size: 15px;
+  font-size: 15px;
+  @media (min-width: 768px) {
+    font-size: 25px;
   }
 `;
 const Paragraph = styled.p`
@@ -35,31 +38,65 @@ const Paragraph = styled.p`
   margin-bottom: 4%;
 `;
 const Question = (props) => {
-  /* Averiguar como evitar que se quede checkado el input marcado de la pregunta anterior. Posible arreglo utilizando otro sistema de marcado (fav)*/
+  const [inputsSorted, setInputsSorted] = useState([]);
+  const inputsArray = [
+    {
+      id: Math.ceil(Math.random() * 10000),
+      input: (
+        <RandomInputs trivia={props.trivia} handleInput={props.handleInput} />
+      ),
+    },
+    {
+      id: Math.ceil(Math.random() * 10000),
+      input: (
+        <RandomInputs trivia={props.trivia} handleInput={props.handleInput} />
+      ),
+    },
+    {
+      id: Math.ceil(Math.random() * 10000),
+      input: (
+        <CorrectInput
+          key={Math.ceil(Math.random() * 10000)}
+          trivia={props.trivia}
+          handleInput={props.handleInput}
+        />
+      ),
+    },
+    {
+      id: Math.ceil(Math.random() * 10000),
+      input: (
+        <RandomInputs trivia={props.trivia} handleInput={props.handleInput} />
+      ),
+    },
+  ];
+  useEffect(() => {
+    const compareObjects = (object1, object2, key) => {
+      const obj1 = object1[key];
+      const obj2 = object2[key];
+
+      if (obj1 < obj2) {
+        return -1;
+      }
+      if (obj1 > obj2) {
+        return 1;
+      }
+      return 0;
+    };
+
+    inputsArray.sort((input1, input2) => {
+      return compareObjects(input1, input2, "id");
+    });
+    setInputsSorted(inputsArray);
+  }, [props.trivia]);
+
+  const randomInputsPosition = inputsSorted.map((input, index) => {
+    return <ListItems key={index}>{input.input}</ListItems>;
+  });
   return (
     <>
       <Form>
         <Label htmlFor="options">
-          What is {props.text}?
-          {/* Averiguar cómo colocar los inputs de manera aleatoria */}
-          <Container>
-            <RandomInputs
-              trivia={props.trivia}
-              handleInput={props.handleInput}
-            />
-            <RandomInputs
-              trivia={props.trivia}
-              handleInput={props.handleInput}
-            />
-            <CorrectInput
-              trivia={props.trivia}
-              handleInput={props.handleInput}
-            />
-            <RandomInputs
-              trivia={props.trivia}
-              handleInput={props.handleInput}
-            />
-          </Container>
+          What is {props.text}?<List>{randomInputsPosition}</List>
         </Label>
       </Form>
       <Answer>

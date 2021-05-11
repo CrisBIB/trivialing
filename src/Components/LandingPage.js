@@ -60,7 +60,7 @@ const LandingPage = () => {
         </div>
         <Button
           variant="warning"
-          class="btn btn-success"
+          className="btn btn-success"
           style={{ marginBottom: 30 }}
         >
           <Link

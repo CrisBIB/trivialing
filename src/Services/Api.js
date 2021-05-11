@@ -1,11 +1,5 @@
 const getRandomNumberFromApi = () => {
-  return fetch(
-    `http://numbersapi.com/random/trivia?json` /* , {
-    mode: "no-cors",
-    credentials: "omit",
-    referrerPolicy: "unsafe-url",
-  } */
-  )
+  return fetch(`http://numbersapi.com/random/trivia?json`)
     .then((response) => response.json())
     .then((dataApi) => {
       return dataApi;
@@ -14,13 +8,7 @@ const getRandomNumberFromApi = () => {
 };
 
 const getFragmentNumberFromApi = (number) => {
-  return fetch(
-    `http://numbersapi.com/${number}/trivia?fragment` /* , {
-    mode: "no-cors",
-    credentials: "omit",
-    referrerPolicy: "unsafe-url",
-  } */
-  )
+  return fetch(`http://numbersapi.com/${number}/trivia?fragment`)
     .then((response) => response.text())
     .then((dataApi) => {
       return dataApi;

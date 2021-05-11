@@ -10,10 +10,8 @@ const Label = styled.label`
 `;
 
 const CorrectInput = (props) => {
-  const rightOption = parseInt(props.trivia.number);
-  const rightOptionValue = props.trivia.number;
+  const rightOption = props.trivia.number;
 
-  //Esta función me servirá para guardar en el estado las respuestas correctas que se den, y pintarlas en verdes en el listado de preguntas contestadas.
   const handleInput = (ev) => {
     const inputId = parseInt(ev.target.id);
     props.handleInput(inputId);
@@ -24,8 +22,9 @@ const CorrectInput = (props) => {
         onChange={handleInput}
         type="radio"
         name="options"
-        id={rightOptionValue}
+        id={rightOption}
         value=""
+     
       />{" "}
       {rightOption}
     </Label>

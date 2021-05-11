@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 const Small = styled.small`
-  font-size: 30px;
-  @media (max-width: 768px) {
-    font-size: 20px;
+  font-size: 20px;
+  color: #007787;
+  @media (min-width: 768px) {
+    font-size: 30px;
   }
 `;
 

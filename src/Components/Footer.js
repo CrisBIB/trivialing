@@ -2,11 +2,10 @@ import styled from "styled-components";
 import logoReact from "../Images/react.png";
 
 const Footer = styled.footer`
-  background: black;
-  color: white;
+  font-size: 1rem;
+  height: 3rem;
   padding: 20px;
-  position: absolute;
-  bottom: 0;
+  border-top: solid 1px #007787;
   display: flex;
   justify-content: space-between;
   align-items: center;
