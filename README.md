@@ -16,6 +16,7 @@ Para pasar a la siguiente pregunta, hay que hacer click en el botón _Next quest
 
 ## Estructura
 
+```
 TRIVIALING
 ├── docs
 ├── publicnode_modules
@@ -48,6 +49,7 @@ TRIVIALING
 ├── package-lock.json
 ├── package.json
 └── README.md
+```
 
 ## Instalación
 
