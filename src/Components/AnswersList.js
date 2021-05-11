@@ -29,7 +29,6 @@ const Image = styled.img`
   height: 25px;
   margin-right: 5px;
 `;
-
 const Paragraph = styled.p`
   text-align: center;
   margin-bottom: 4%;
