@@ -41,14 +41,15 @@ const QuizPage = () => {
   });
   /* AQUÍ HAY UN ERROR */
   const [clearProgressBar, setClearProgressBar] = useState({
-    success: null,
-    warning: null,
-    danger: null,
+    warning: 0,
+    success: 0,
+    danger: 0,
   });
+  console.log(clearProgressBar);
   const [buttonConfirmDisability, setButtonConfirmDisability] = useState(false);
   const [buttonNextDisability, setButtonNextDisability] = useState(true);
 
-  /* AL ARRANCAR LA APP */
+  /* RUN APP */
 
   //1. Calls to API effects
   useEffect(() => {
@@ -82,7 +83,7 @@ const QuizPage = () => {
     }
   }, [trivia]);
 
-  //2. Cronómetro
+  //2. Count down
   useEffect(() => {
     const countDown = () => {
       confirmAnswer();
@@ -95,7 +96,7 @@ const QuizPage = () => {
     playProgressBar();
   }, [trivia]);
 
-  //Acciono la línea de tiempo
+  //Play time line
   const playProgressBar = () => {
     const successProgress = () => {
       setDisplayProgressBar({
@@ -125,7 +126,7 @@ const QuizPage = () => {
     );
   };
 
-  // Definición de funciones manejadoras
+  // Define handle functions
   const handleInput = (inputChecked) => {
     setInputId(inputChecked);
   };
@@ -150,15 +151,13 @@ const QuizPage = () => {
   };
   const upDateCounter = () => {
     let nextNumberCounter;
-    if (numberCounter < 10) {
-      nextNumberCounter = numberCounter + 1;
-    } else {
-      nextNumberCounter = 1;
-    }
+    numberCounter === 10
+      ? (nextNumberCounter = 1)
+      : (nextNumberCounter = numberCounter + 1);
     return setNumberCounter(nextNumberCounter);
   };
 
-  //Reseteo la línea de tiempo
+  //Reset time line
   const resetProgressBar = () => {
     setDisplayProgressBar({
       success: "start",
@@ -168,6 +167,12 @@ const QuizPage = () => {
     clearTimeout(clearProgressBar.success);
     clearTimeout(clearProgressBar.warning);
     clearTimeout(clearProgressBar.danger);
+
+    setClearProgressBar({
+      success: 0,
+      warning: 0,
+      danger: 0,
+    });
   };
   return (
     <>

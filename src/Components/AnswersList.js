@@ -49,7 +49,6 @@ const Div = styled.div``;
 
 const AnswersList = (props) => {
   const [iconsArray, setIconsArray] = useState([]);
-  console.log(props.inputId, props.answers, iconsArray);
   useEffect(() => {
     if (props.inputId) {
       props.trivia.number === props.inputId

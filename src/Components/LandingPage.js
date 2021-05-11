@@ -18,14 +18,22 @@ const Title = styled.h1`
   font-size: 3em;
   margin-top: 1em;
   color: #007787;
+  @media (min-width: 768px) {
+    font-size: 5em;
+  }
 `;
 const Image = styled.img`
   width: 30%;
   display: inline-block;
   position: absolute;
-  right: 5px;
-  top: 70px;
+  right: 3%;
+  top: 8%;
   z-index: -1;
+  @media (min-width: 768px) {
+    width: 15%;
+    right: 30%;
+    top: 10%;
+  }
 `;
 const Subtitle = styled.h2`
   font-size: 1.7em;
@@ -34,12 +42,12 @@ const Subtitle = styled.h2`
   color: #007787;
 `;
 
-const Text = styled.h3`
+/* const Text = styled.h3`
   font-size: 1.5em;
   text-align: center;
   margin-top: 0em;
   color: #e685c3s;
-`;
+`; */
 
 const LandingPage = () => {
   return (
@@ -56,7 +64,7 @@ const LandingPage = () => {
         <Subtitle>Wellcome to the amazing world of numbers!</Subtitle>
         <div>
           {/*Hacer un colapsable*/}
-          <Text>Ver instrucciones</Text>
+          {/* <Text>Ver instrucciones</Text> */}
         </div>
         <Button
           variant="warning"
