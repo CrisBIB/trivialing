@@ -24,8 +24,7 @@ const CorrectInput = (props) => {
         name="options"
         id={rightOption}
         value=""
-     
-      />{" "}
+      />
       {rightOption}
     </Label>
   );

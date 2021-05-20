@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import api from "../Services/Api";
+import ls from "../Services/LocalStorage";
 import Counter from "./Counter";
 import TimeLine from "./TimeLine";
 import Question from "./Question";
@@ -27,14 +28,19 @@ const Main = styled.main`
 const questionMaxTime = 15000;
 
 const QuizPage = () => {
+  const localStorageData = ls.get("filterData") || {};
   // Data from API states
   const [trivia, setTrivia] = useState({});
   const [fragment, setFragment] = useState("");
   // Questions states
   const [inputId, setInputId] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState("");
-  const [numberCounter, setNumberCounter] = useState(1);
-  const [questionsAnswered, setQuestionsAnswered] = useState([]);
+  const [numberCounter, setNumberCounter] = useState(
+    localStorageData.numberCounter || 1
+  );
+  const [questionsAnswered, setQuestionsAnswered] = useState(
+    localStorageData.questionsAnswered || []
+  );
   // Time Line states
   const [displayProgressBar, setDisplayProgressBar] = useState({
     success: "start",
@@ -54,6 +60,11 @@ const QuizPage = () => {
   const [buttonNextDisability, setButtonNextDisability] = useState(true);
 
   /* RUN APP */
+
+  // 0. Save data from local Storage
+  useEffect(() => {
+    ls.set("gameData", { numberCounter, questionsAnswered });
+  });
 
   //1. Calls to API effects
   useEffect(() => {

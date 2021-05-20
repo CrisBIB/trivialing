@@ -13,7 +13,7 @@ const RandomInputs = (props) => {
   const [randomNumber, setRandomNumber] = useState(0);
 
   useEffect(() => {
-    setRandomNumber(Math.ceil(Math.random() * 10000));
+    setRandomNumber(Math.ceil(Math.random() * (props.trivia.number * 10)));
   }, [props.trivia]);
 
   const handleInput = (ev) => {
